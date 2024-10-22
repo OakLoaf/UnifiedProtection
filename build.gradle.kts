@@ -29,6 +29,7 @@ allprojects {
         maven("https://oss.sonatype.org/content/groups/public/")
         maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") // Spigot
         maven("https://repo.william278.net/releases") // ClopLib, HuskClaims, HuskTowns
+        maven("https://repo.lushplugins.org/snapshots/") // PvPToggle
         maven("https://maven.enginehub.org/repo/") // WorldGuard
         maven("https://jitpack.io") // GriefPrevention
     }
