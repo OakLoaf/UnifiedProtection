@@ -9,5 +9,5 @@ dependencies {
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.12")
 
     // Libraries
-    implementation(project(":common"))
+    api(project(":common"))
 }
