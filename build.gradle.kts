@@ -7,6 +7,10 @@ plugins {
 group = "org.lushplugins"
 version = "1.0.0-alpha2"
 
+dependencies {
+    implementation(project(":bukkit"))
+}
+
 tasks {
     shadowJar {
         relocate("net.william278.cloplib", "org.lushplugins.libraries.cloplib")
@@ -35,13 +39,11 @@ allprojects {
     }
 
     dependencies {
-        implementation(project(":bukkit"))
-
         compileOnly("org.jetbrains:annotations:26.0.1")
     }
 
     java {
-        toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+        toolchain.languageVersion.set(JavaLanguageVersion.of(21))
 
         registerFeature("optional") {
             usingSourceSet(sourceSets["main"])
