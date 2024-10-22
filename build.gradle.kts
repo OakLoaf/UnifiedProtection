@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "org.lushplugins"
-version = "1.0.0-alpha1"
+version = "1.0.0-alpha2"
 
 tasks {
     shadowJar {
@@ -35,6 +35,8 @@ allprojects {
     }
 
     dependencies {
+        implementation(project(":bukkit"))
+
         compileOnly("org.jetbrains:annotations:26.0.1")
     }
 
