@@ -7,20 +7,8 @@ import net.william278.cloplib.operation.OperationType;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
-import org.lushplugins.unifiedprotection.BukkitConverter;
 
 public class GriefPreventionHook extends AbstractBukkitHook {
-
-    public GriefPreventionHook() {
-        setDefaultChecker(((ignored, position) -> {
-            Claim claim = GriefPrevention.instance.dataStore.getClaimAt(
-                BukkitConverter.convert(position),
-                false,
-                null);
-
-            return claim == null;
-        }));
-    }
 
     @Override
     public boolean isOperationAllowed(OperationType operationType, Location location, @Nullable Player player) {

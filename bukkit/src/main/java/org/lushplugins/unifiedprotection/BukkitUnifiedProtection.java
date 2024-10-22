@@ -5,7 +5,9 @@ import net.william278.cloplib.operation.OperationType;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.Nullable;
 import org.lushplugins.unifiedprotection.hook.*;
+import org.lushplugins.unifiedprotection.player.OnlinePlayer;
 import org.lushplugins.unifiedprotection.position.BukkitOperationPosition;
 
 import java.util.ArrayList;
@@ -14,15 +16,9 @@ import java.util.concurrent.Callable;
 import java.util.logging.Level;
 
 public class BukkitUnifiedProtection {
-    private static final List<AbstractHook> hooks = new ArrayList<>();
-    private static boolean initialized = false;
+    private final List<AbstractHook> hooks = new ArrayList<>();
 
-    public static void ensureInit() {
-        if (initialized) {
-            return;
-        }
-        initialized = true;
-
+    public BukkitUnifiedProtection() {
         addHook("HuskClaims", HuskClaimsHook::new);
         addHook("HuskTowns", HuskTownsHook::new);
         addHook("GriefPrevention", GriefPreventionHook::new);
@@ -32,15 +28,22 @@ public class BukkitUnifiedProtection {
     /**
      * @param operationType The operation type to check
      * @param location The location to check
-     * @return Whether the operation is allowed at the given position, if a mapping is not applied it will be
-     *         assumed to be allowed.
+     * @return Whether an operation is allowed at a given location
      */
-    public static boolean isOperationAllowed(OperationType operationType, Location location) {
-        ensureInit();
+    public boolean isOperationAllowed(OperationType operationType, Location location) {
+        return isOperationAllowed(operationType, location, null);
+    }
 
+    /**
+     * @param operationType The operation type to check
+     * @param location The location to check
+     * @param player The player to check
+     * @return Whether an operation is allowed by a player at a given location
+     */
+    public boolean isOperationAllowed(OperationType operationType, Location location, @Nullable OnlinePlayer player) {
         OperationPosition position = new BukkitOperationPosition(location);
         for (AbstractHook hook : hooks) {
-            if (!hook.getMappings().isOperationAllowed(operationType, position)) {
+            if (!hook.isOperationAllowed(operationType, position, player)) {
                 return false;
             }
         }
@@ -48,11 +51,11 @@ public class BukkitUnifiedProtection {
         return true;
     }
 
-    public static void addHook(AbstractHook hook) {
+    public void addHook(AbstractHook hook) {
         hooks.add(hook);
     }
 
-    private static void addHook(String pluginName, Callable<AbstractHook> hook) {
+    private void addHook(String pluginName, Callable<AbstractHook> hook) {
         Plugin plugin = Bukkit.getPluginManager().getPlugin(pluginName);
         if (plugin != null && plugin.isEnabled()) {
             try {
