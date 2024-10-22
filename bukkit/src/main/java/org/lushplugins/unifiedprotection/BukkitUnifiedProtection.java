@@ -10,19 +10,16 @@ import org.lushplugins.unifiedprotection.hook.*;
 import org.lushplugins.unifiedprotection.player.OnlinePlayer;
 import org.lushplugins.unifiedprotection.position.BukkitOperationPosition;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.logging.Level;
 
-public class BukkitUnifiedProtection {
-    private final List<AbstractHook> hooks = new ArrayList<>();
+public class BukkitUnifiedProtection extends UnifiedProtection {
 
     public BukkitUnifiedProtection() {
-        addHook("HuskClaims", HuskClaimsHook::new);
-        addHook("HuskTowns", HuskTownsHook::new);
-        addHook("GriefPrevention", GriefPreventionHook::new);
-        addHook("WorldGuard", WorldGuardHook::new);
+        addPluginHook("HuskClaims", HuskClaimsHook::new);
+        addPluginHook("HuskTowns", HuskTownsHook::new);
+        addPluginHook("GriefPrevention", GriefPreventionHook::new);
+        addPluginHook("WorldGuard", WorldGuardHook::new);
     }
 
     /**
@@ -42,20 +39,10 @@ public class BukkitUnifiedProtection {
      */
     public boolean isOperationAllowed(OperationType operationType, Location location, @Nullable OnlinePlayer player) {
         OperationPosition position = new BukkitOperationPosition(location);
-        for (AbstractHook hook : hooks) {
-            if (!hook.isOperationAllowed(operationType, position, player)) {
-                return false;
-            }
-        }
-
-        return true;
+        return isOperationAllowed(operationType, position, player);
     }
 
-    public void addHook(AbstractHook hook) {
-        hooks.add(hook);
-    }
-
-    private void addHook(String pluginName, Callable<AbstractHook> hook) {
+    private void addPluginHook(String pluginName, Callable<AbstractHook> hook) {
         Plugin plugin = Bukkit.getPluginManager().getPlugin(pluginName);
         if (plugin != null && plugin.isEnabled()) {
             try {
