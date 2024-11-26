@@ -7,7 +7,7 @@ plugins {
 group = "org.lushplugins"
 version = "1.0.0-alpha8"
 
-allprojects {
+subprojects {
     apply(plugin="java-library")
     apply(plugin="maven-publish")
     apply(plugin="io.github.goooler.shadow")
