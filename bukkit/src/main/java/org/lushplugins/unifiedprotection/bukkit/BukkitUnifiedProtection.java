@@ -22,10 +22,10 @@ import java.util.logging.Level;
 public class BukkitUnifiedProtection extends UnifiedProtection {
 
     public BukkitUnifiedProtection() {
-        addPluginHook("HuskClaims", HuskClaimsHook::new);
-        addPluginHook("HuskTowns", HuskTownsHook::new);
-        addPluginHook("GriefPrevention", GriefPreventionHook::new);
-        addPluginHook("WorldGuard", WorldGuardHook::new);
+        addPluginHook("HuskClaims", () -> new HuskClaimsHook());
+        addPluginHook("HuskTowns", () -> new HuskTownsHook());
+        addPluginHook("GriefPrevention", () -> new GriefPreventionHook());
+        addPluginHook("WorldGuard", () -> new WorldGuardHook());
     }
 
     /**
