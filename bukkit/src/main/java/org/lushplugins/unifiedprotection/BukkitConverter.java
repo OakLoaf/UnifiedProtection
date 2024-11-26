@@ -18,6 +18,10 @@ public class BukkitConverter {
         return new Location(convert(position.getWorld()), position.getX(), position.getY(), position.getZ());
     }
 
+    public static OnlinePlayer convert(Player player) {
+        return new OnlinePlayer(player.getUniqueId(), player.getName());
+    }
+
     public static Player convert(OnlinePlayer player) {
         return Bukkit.getPlayer(player.getUniqueId());
     }

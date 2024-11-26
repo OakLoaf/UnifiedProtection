@@ -4,7 +4,9 @@ import net.william278.cloplib.operation.OperationPosition;
 import net.william278.cloplib.operation.OperationType;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 import org.lushplugins.unifiedprotection.hook.*;
 import org.lushplugins.unifiedprotection.player.OnlinePlayer;
@@ -37,9 +39,33 @@ public class BukkitUnifiedProtection extends UnifiedProtection {
      * @param player The player to check
      * @return Whether an operation is allowed by a player at a given location
      */
-    public boolean isOperationAllowed(OperationType operationType, Location location, @Nullable OnlinePlayer player) {
+    public boolean isOperationAllowed(OperationType operationType, Location location, @Nullable Player player) {
         OperationPosition position = new BukkitOperationPosition(location);
-        return isOperationAllowed(operationType, position, player);
+        OnlinePlayer onlinePlayer = BukkitConverter.convert(player);
+        return isOperationAllowed(operationType, position, onlinePlayer);
+    }
+
+    /**
+     * @param location The center location
+     * @param range The range around the location
+     * @return Whether a region is within range of the center location
+     */
+    public boolean hasRegionInRange(Location location, int range) {
+        OperationPosition position = new BukkitOperationPosition(location);
+        return hasRegionInRange(position, range);
+    }
+
+    /**
+     * @param location The center location
+     * @param range The range around the location
+     * @param player The player to check
+     * @return Whether all regions within range of the center location are owned by the player
+     */
+    @ApiStatus.Experimental
+    public boolean areRegionsInRangeOwnedBy(Location location, int range, Player player) {
+        OperationPosition position = new BukkitOperationPosition(location);
+        OnlinePlayer onlinePlayer = BukkitConverter.convert(player);
+        return areRegionsInRangeOwnedBy(position, range, onlinePlayer);
     }
 
     private void addPluginHook(String pluginName, Callable<AbstractHook> hook) {
