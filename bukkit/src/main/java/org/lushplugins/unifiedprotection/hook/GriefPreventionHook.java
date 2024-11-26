@@ -2,13 +2,15 @@ package org.lushplugins.unifiedprotection.hook;
 
 import me.ryanhamshire.GriefPrevention.Claim;
 import me.ryanhamshire.GriefPrevention.ClaimPermission;
+import me.ryanhamshire.GriefPrevention.DataStore;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import net.william278.cloplib.operation.OperationType;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
+import org.lushplugins.unifiedprotection.utils.ChunkUtils;
 
-public class GriefPreventionHook extends AbstractBukkitHook {
+public class GriefPreventionHook extends AbstractBukkitHook implements BukkitRegionHook {
 
     @Override
     public boolean isOperationAllowed(OperationType operationType, Location location, @Nullable Player player) {
@@ -41,5 +43,20 @@ public class GriefPreventionHook extends AbstractBukkitHook {
         }
 
         return claim.checkPermission(player, permission, null) == null;
+    }
+
+    @Override
+    public boolean hasRegionInRange(Location location, int range) {
+        DataStore dataStore = GriefPrevention.instance.dataStore;
+        return ChunkUtils.getChunksInRange(location, range).stream()
+            .anyMatch(chunk -> !dataStore.getClaims(chunk.getX(), chunk.getZ()).isEmpty());
+    }
+
+    @Override
+    public boolean areRegionsInRangeOwnedBy(Location location, int range, Player player) {
+        DataStore dataStore = GriefPrevention.instance.dataStore;
+        return ChunkUtils.getChunksInRange(location, range).stream()
+            .flatMap(chunk -> dataStore.getClaims(chunk.getX(), chunk.getZ()).stream())
+            .allMatch(claim -> claim.checkPermission(player, ClaimPermission.Build, null) == null);
     }
 }

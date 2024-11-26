@@ -1,11 +1,13 @@
 package org.lushplugins.unifiedprotection.hook;
 
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
+import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.flags.Flags;
 import com.sk89q.worldguard.protection.flags.StateFlag;
 import com.sk89q.worldguard.protection.managers.RegionManager;
+import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
 import net.william278.cloplib.operation.OperationType;
 import org.bukkit.Location;
@@ -13,7 +15,7 @@ import org.bukkit.entity.Player;
 
 import javax.annotation.Nullable;
 
-public class WorldGuardHook extends AbstractBukkitHook {
+public class WorldGuardHook extends AbstractBukkitHook implements BukkitRegionHook {
 
     @Override
     public boolean isOperationAllowed(OperationType operationType, Location location, @Nullable Player player) {
@@ -52,5 +54,37 @@ public class WorldGuardHook extends AbstractBukkitHook {
             StateFlag.State state = region.getFlag(flag);
             return (state == null && flag.getDefault() == StateFlag.State.DENY) || state == StateFlag.State.DENY;
         });
+    }
+
+    @Override
+    public boolean hasRegionInRange(Location location, int range) {
+        ApplicableRegionSet regionSet = getRegionsInRange(location, range);
+        return regionSet != null && regionSet.size() > 0;
+    }
+
+    @Override
+    public boolean areRegionsInRangeOwnedBy(Location location, int range, Player player) {
+        ApplicableRegionSet regionSet = getRegionsInRange(location, range);
+        if (regionSet == null) {
+            return true;
+        }
+
+        return regionSet.getRegions().stream()
+            .allMatch(region -> {
+                StateFlag.State state = region.getFlag(Flags.BLOCK_PLACE);
+                return (state == null && Flags.BLOCK_PLACE.getDefault() == StateFlag.State.DENY) || state == StateFlag.State.DENY;
+            });
+    }
+
+    private ApplicableRegionSet getRegionsInRange(Location location, int range) {
+        RegionContainer regionContainer = WorldGuard.getInstance().getPlatform().getRegionContainer();
+        RegionManager regionManager = regionContainer.get(BukkitAdapter.adapt(location.getWorld()));
+        if (regionManager == null) {
+            return null;
+        }
+
+        BlockVector3 min = BukkitAdapter.asBlockVector(location).subtract(range, range, range);
+        BlockVector3 max = BukkitAdapter.asBlockVector(location).add(range, range, range);
+        return regionManager.getApplicableRegions(new ProtectedCuboidRegion("", true, min, max));
     }
 }

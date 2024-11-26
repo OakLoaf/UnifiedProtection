@@ -4,14 +4,20 @@ import net.william278.cloplib.operation.OperationPosition;
 import net.william278.cloplib.operation.OperationWorld;
 import net.william278.husktowns.api.BukkitHuskTownsAPI;
 import net.william278.husktowns.claim.Position;
+import net.william278.husktowns.claim.TownClaim;
 import net.william278.husktowns.claim.World;
 import net.william278.husktowns.libraries.cloplib.operation.Operation;
 import net.william278.husktowns.libraries.cloplib.operation.OperationType;
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 import org.lushplugins.unifiedprotection.BukkitConverter;
 import org.lushplugins.unifiedprotection.player.OnlinePlayer;
+import org.lushplugins.unifiedprotection.utils.ChunkUtils;
 
-public class HuskTownsHook extends AbstractHook {
+import java.util.UUID;
+
+public class HuskTownsHook extends AbstractHook implements BukkitRegionHook {
 
     @Override
     public boolean isOperationAllowed(net.william278.cloplib.operation.OperationType operationType, OperationPosition position, @Nullable OnlinePlayer onlinePlayer) {
@@ -52,6 +58,32 @@ public class HuskTownsHook extends AbstractHook {
             getPosition(position));
 
         return huskTownsAPI.isOperationAllowed(operation);
+    }
+
+    @Override
+    public boolean hasRegionInRange(Location location, int range) {
+        BukkitHuskTownsAPI huskTownsAPI = BukkitHuskTownsAPI.getInstance();
+        return ChunkUtils.getChunksInRange(location, range).stream()
+            .anyMatch(chunk -> {
+                TownClaim claim = huskTownsAPI.getClaimAt(chunk).orElse(null);
+                return claim != null;
+            });
+    }
+
+    @Override
+    public boolean areRegionsInRangeOwnedBy(Location location, int range, Player player) {
+        BukkitHuskTownsAPI huskTownsAPI = BukkitHuskTownsAPI.getInstance();
+        UUID uuid = player.getUniqueId();
+
+        return ChunkUtils.getChunksInRange(location, range).stream()
+            .allMatch(chunk -> {
+                TownClaim claim = huskTownsAPI.getClaimAt(chunk).orElse(null);
+                if (claim == null) {
+                    return true;
+                }
+
+                return claim.claim().isPlotMember(uuid);
+            });
     }
 
     private Position getPosition(OperationPosition position) {
