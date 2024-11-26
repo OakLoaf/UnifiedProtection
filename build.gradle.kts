@@ -5,13 +5,17 @@ plugins {
 }
 
 group = "org.lushplugins"
-version = "1.0.0-alpha5"
+version = "1.0.0-alpha6"
 
 dependencies {
     api(project(":bukkit"))
 }
 
 tasks {
+    build {
+        dependsOn(shadowJar)
+    }
+
     shadowJar {
         relocate("net.william278.cloplib", "org.lushplugins.libraries.cloplib")
 
