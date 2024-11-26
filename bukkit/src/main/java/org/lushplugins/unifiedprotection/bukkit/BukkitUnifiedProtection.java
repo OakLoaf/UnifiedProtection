@@ -21,6 +21,7 @@ import java.util.logging.Level;
 
 public class BukkitUnifiedProtection extends UnifiedProtection {
 
+    @SuppressWarnings("Convert2MethodRef")
     public BukkitUnifiedProtection() {
         addPluginHook("HuskClaims", () -> new HuskClaimsHook());
         addPluginHook("HuskTowns", () -> new HuskTownsHook());
