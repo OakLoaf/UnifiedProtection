@@ -1,4 +1,4 @@
-package org.lushplugins.unifiedprotection;
+package org.lushplugins.unifiedprotection.bukkit;
 
 import net.william278.cloplib.operation.OperationPosition;
 import net.william278.cloplib.operation.OperationWorld;

@@ -1,4 +1,4 @@
-package org.lushplugins.unifiedprotection.hook;
+package org.lushplugins.unifiedprotection.bukkit.hook;
 
 import me.ryanhamshire.GriefPrevention.Claim;
 import me.ryanhamshire.GriefPrevention.ClaimPermission;
@@ -8,7 +8,7 @@ import net.william278.cloplib.operation.OperationType;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
-import org.lushplugins.unifiedprotection.utils.ChunkUtils;
+import org.lushplugins.unifiedprotection.bukkit.utils.ChunkUtils;
 
 public class GriefPreventionHook extends AbstractBukkitHook implements BukkitRegionHook {
 

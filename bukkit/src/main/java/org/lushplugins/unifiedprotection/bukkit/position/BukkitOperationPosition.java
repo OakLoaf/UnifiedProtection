@@ -1,8 +1,10 @@
-package org.lushplugins.unifiedprotection.position;
+package org.lushplugins.unifiedprotection.bukkit.position;
 
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.jetbrains.annotations.NotNull;
+import org.lushplugins.unifiedprotection.position.GenericOperationPosition;
+import org.lushplugins.unifiedprotection.position.GenericOperationWorld;
 
 public class BukkitOperationPosition extends GenericOperationPosition {
 

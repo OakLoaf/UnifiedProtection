@@ -1,4 +1,4 @@
-package org.lushplugins.unifiedprotection.hook;
+package org.lushplugins.unifiedprotection.bukkit.hook;
 
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldedit.math.BlockVector3;

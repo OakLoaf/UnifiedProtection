@@ -1,4 +1,4 @@
-package org.lushplugins.unifiedprotection.utils;
+package org.lushplugins.unifiedprotection.bukkit.utils;
 
 import org.bukkit.Chunk;
 import org.bukkit.Location;

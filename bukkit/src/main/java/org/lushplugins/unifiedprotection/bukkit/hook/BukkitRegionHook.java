@@ -1,9 +1,10 @@
-package org.lushplugins.unifiedprotection.hook;
+package org.lushplugins.unifiedprotection.bukkit.hook;
 
 import net.william278.cloplib.operation.OperationPosition;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.lushplugins.unifiedprotection.BukkitConverter;
+import org.lushplugins.unifiedprotection.bukkit.BukkitConverter;
+import org.lushplugins.unifiedprotection.hook.RegionHook;
 import org.lushplugins.unifiedprotection.player.OnlinePlayer;
 
 public interface BukkitRegionHook extends RegionHook {

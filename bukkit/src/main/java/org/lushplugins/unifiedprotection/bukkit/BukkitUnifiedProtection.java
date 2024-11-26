@@ -1,4 +1,4 @@
-package org.lushplugins.unifiedprotection;
+package org.lushplugins.unifiedprotection.bukkit;
 
 import net.william278.cloplib.operation.OperationPosition;
 import net.william278.cloplib.operation.OperationType;
@@ -8,9 +8,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
+import org.lushplugins.unifiedprotection.UnifiedProtection;
+import org.lushplugins.unifiedprotection.bukkit.hook.GriefPreventionHook;
+import org.lushplugins.unifiedprotection.bukkit.hook.HuskTownsHook;
+import org.lushplugins.unifiedprotection.bukkit.hook.WorldGuardHook;
 import org.lushplugins.unifiedprotection.hook.*;
 import org.lushplugins.unifiedprotection.player.OnlinePlayer;
-import org.lushplugins.unifiedprotection.position.BukkitOperationPosition;
+import org.lushplugins.unifiedprotection.bukkit.position.BukkitOperationPosition;
 
 import java.util.concurrent.Callable;
 import java.util.logging.Level;

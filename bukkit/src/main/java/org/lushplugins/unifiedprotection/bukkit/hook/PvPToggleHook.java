@@ -1,4 +1,4 @@
-package org.lushplugins.unifiedprotection.hook;
+package org.lushplugins.unifiedprotection.bukkit.hook;
 
 import net.william278.cloplib.operation.OperationType;
 import org.bukkit.Location;
