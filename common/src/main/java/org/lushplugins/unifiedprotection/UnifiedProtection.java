@@ -43,14 +43,14 @@ public class UnifiedProtection {
     }
 
     /**
-     * @param position The center position
-     * @param range The range around the position
-     * @return Whether a region is within range of the center position
+     * @param pos1 The first position
+     * @param pos2 The second position
+     * @return Whether a region is within the specified area
      */
-    public boolean hasRegionInRange(OperationPosition position, int range) {
+    public boolean hasRegionWithin(OperationPosition pos1, OperationPosition pos2) {
         for (AbstractHook hook : hooks) {
             if (hook instanceof RegionHook regionHook) {
-                if (regionHook.hasRegionInRange(position, range)) {
+                if (regionHook.hasRegionWithin(pos1, pos2)) {
                     return true;
                 }
             }
@@ -60,16 +60,16 @@ public class UnifiedProtection {
     }
 
     /**
-     * @param position The center position
-     * @param range The range around the position
+     * @param pos1 The first position
+     * @param pos2 The second position
      * @param player The player to check
-     * @return Whether all regions within range of the center position are owned by the player
+     * @return Whether all regions within the specified area are owned by the player
      */
     @ApiStatus.Experimental
-    public boolean areRegionsInRangeOwnedBy(OperationPosition position, int range, OnlinePlayer player) {
+    public boolean ownsAllRegionsWithin(OperationPosition pos1, OperationPosition pos2, OnlinePlayer player) {
         for (AbstractHook hook : hooks) {
             if (hook instanceof RegionHook regionHook) {
-                if (!regionHook.areRegionsInRangeOwnedBy(position, range, player)) {
+                if (!regionHook.ownsAllRegionsWithin(pos1, pos2, player)) {
                     return false;
                 }
             }
