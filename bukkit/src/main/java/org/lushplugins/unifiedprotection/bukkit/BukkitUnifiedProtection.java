@@ -47,7 +47,7 @@ public class BukkitUnifiedProtection extends UnifiedProtection {
      * @return Whether an operation is allowed by a player at a given location
      */
     public boolean isOperationAllowed(OperationType operationType, Location location, @Nullable Player player) {
-        OperationPosition position = new BukkitOperationPosition(location);
+        OperationPosition position = BukkitConverter.convert(location);
         OnlinePlayer onlinePlayer = BukkitConverter.convert(player);
         return isOperationAllowed(operationType, position, onlinePlayer);
     }
@@ -58,7 +58,7 @@ public class BukkitUnifiedProtection extends UnifiedProtection {
      * @return Whether a region is within range of the center location
      */
     public boolean hasRegionInRange(Location location, int range) {
-        OperationPosition position = new BukkitOperationPosition(location);
+        OperationPosition position = BukkitConverter.convert(location);
         return hasRegionInRange(position, range);
     }
 
@@ -70,7 +70,7 @@ public class BukkitUnifiedProtection extends UnifiedProtection {
      */
     @ApiStatus.Experimental
     public boolean areRegionsInRangeOwnedBy(Location location, int range, Player player) {
-        OperationPosition position = new BukkitOperationPosition(location);
+        OperationPosition position = BukkitConverter.convert(location);
         OnlinePlayer onlinePlayer = BukkitConverter.convert(player);
         return areRegionsInRangeOwnedBy(position, range, onlinePlayer);
     }

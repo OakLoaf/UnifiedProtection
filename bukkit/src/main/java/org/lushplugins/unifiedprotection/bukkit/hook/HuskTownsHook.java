@@ -62,9 +62,9 @@ public class HuskTownsHook extends AbstractHook implements BukkitRegionHook {
     }
 
     @Override
-    public boolean hasRegionInRange(Location location, int range) {
+    public boolean hasRegionWithin(Location loc1, Location loc2) {
         BukkitHuskTownsAPI huskTownsAPI = BukkitHuskTownsAPI.getInstance();
-        return ChunkUtils.getChunksInRange(location, range).stream()
+        return ChunkUtils.getChunksInArea(loc1, loc2).stream()
             .anyMatch(chunk -> {
                 TownClaim claim = huskTownsAPI.getClaimAt(chunk).orElse(null);
                 return claim != null;
@@ -72,11 +72,11 @@ public class HuskTownsHook extends AbstractHook implements BukkitRegionHook {
     }
 
     @Override
-    public boolean areRegionsInRangeOwnedBy(Location location, int range, Player player) {
+    public boolean ownsAllRegionsWithin(Location loc1, Location loc2, Player player) {
         BukkitHuskTownsAPI huskTownsAPI = BukkitHuskTownsAPI.getInstance();
         UUID uuid = player.getUniqueId();
 
-        return ChunkUtils.getChunksInRange(location, range).stream()
+        return ChunkUtils.getChunksInArea(loc1, loc2).stream()
             .allMatch(chunk -> {
                 TownClaim claim = huskTownsAPI.getClaimAt(chunk).orElse(null);
                 if (claim == null) {

@@ -46,16 +46,16 @@ public class GriefPreventionHook extends AbstractBukkitHook implements BukkitReg
     }
 
     @Override
-    public boolean hasRegionInRange(Location location, int range) {
+    public boolean hasRegionWithin(Location loc1, Location loc2) {
         DataStore dataStore = GriefPrevention.instance.dataStore;
-        return ChunkUtils.getChunksInRange(location, range).stream()
+        return ChunkUtils.getChunksInArea(loc1, loc2).stream()
             .anyMatch(chunk -> !dataStore.getClaims(chunk.getX(), chunk.getZ()).isEmpty());
     }
 
     @Override
-    public boolean areRegionsInRangeOwnedBy(Location location, int range, Player player) {
+    public boolean ownsAllRegionsWithin(Location loc1, Location loc2, Player player) {
         DataStore dataStore = GriefPrevention.instance.dataStore;
-        return ChunkUtils.getChunksInRange(location, range).stream()
+        return ChunkUtils.getChunksInArea(loc1, loc2).stream()
             .flatMap(chunk -> dataStore.getClaims(chunk.getX(), chunk.getZ()).stream())
             .allMatch(claim -> claim.checkPermission(player, ClaimPermission.Build, null) == null);
     }

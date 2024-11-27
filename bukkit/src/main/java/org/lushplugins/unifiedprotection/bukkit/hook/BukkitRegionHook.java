@@ -9,23 +9,23 @@ import org.lushplugins.unifiedprotection.player.OnlinePlayer;
 
 public interface BukkitRegionHook extends RegionHook {
 
-    boolean hasRegionInRange(Location location, int range);
+    boolean hasRegionWithin(Location loc1, Location loc2);
 
-    boolean areRegionsInRangeOwnedBy(Location location, int range, Player player);
+    boolean ownsAllRegionsWithin(Location loc1, Location loc2, Player player);
 
     @Override
-    default boolean hasRegionInRange(OperationPosition position, int range) {
-        return hasRegionInRange(
-            BukkitConverter.convert(position),
-            range
+    default boolean hasRegionWithin(OperationPosition pos1, OperationPosition pos2) {
+        return hasRegionWithin(
+            BukkitConverter.convert(pos1),
+            BukkitConverter.convert(pos2)
         );
     }
 
     @Override
-    default boolean areRegionsInRangeOwnedBy(OperationPosition position, int range, OnlinePlayer player) {
-        return areRegionsInRangeOwnedBy(
-            BukkitConverter.convert(position),
-            range,
+    default boolean ownsAllRegionsWithin(OperationPosition pos1, OperationPosition pos2, OnlinePlayer player) {
+        return ownsAllRegionsWithin(
+            BukkitConverter.convert(pos1),
+            BukkitConverter.convert(pos2),
             BukkitConverter.convert(player)
         );
     }

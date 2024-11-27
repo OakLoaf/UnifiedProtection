@@ -7,11 +7,26 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.lushplugins.unifiedprotection.player.OnlinePlayer;
+import org.lushplugins.unifiedprotection.position.GenericOperationPosition;
+import org.lushplugins.unifiedprotection.position.GenericOperationWorld;
 
 public class BukkitConverter {
 
+    public static OperationWorld convert(World world) {
+        return new GenericOperationWorld(world.getName(), world.getUID());
+    }
+
     public static World convert(OperationWorld world) {
         return Bukkit.getWorld(world.getUuid());
+    }
+
+    public static OperationPosition convert(Location location) {
+        return new GenericOperationPosition(
+            location.getX(),
+            location.getY(),
+            location.getZ(),
+            convert(location.getWorld())
+        );
     }
 
     public static Location convert(OperationPosition position) {

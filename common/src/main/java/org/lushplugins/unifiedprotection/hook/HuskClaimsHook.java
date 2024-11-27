@@ -26,24 +26,23 @@ public class HuskClaimsHook extends AbstractHook implements RegionHook {
     }
 
     @Override
-    public boolean hasRegionInRange(OperationPosition position, int range) {
+    public boolean hasRegionWithin(OperationPosition pos1, OperationPosition pos2) {
         HuskClaimsAPI huskClaimsAPI = HuskClaimsAPI.getInstance();
-        World world = huskClaimsAPI.getWorld(position.getWorld().getName());
-        return !huskClaimsAPI.getClaimsOverlapping(world, Region.around(
-            Position.at(position.getX(), position.getY(), position.getZ(), world),
-            range
+        World world = huskClaimsAPI.getWorld(pos1.getWorld().getName());
+        return !huskClaimsAPI.getClaimsOverlapping(world, Region.from(
+            Position.at(pos1.getX(), pos1.getY(), pos1.getZ(), world),
+            Position.at(pos2.getX(), pos2.getY(), pos2.getZ(), world)
         )).isEmpty();
     }
 
     @Override
-    public boolean areRegionsInRangeOwnedBy(OperationPosition position, int range, OnlinePlayer player) {
+    public boolean ownsAllRegionsWithin(OperationPosition pos1, OperationPosition pos2, OnlinePlayer player) {
         HuskClaimsAPI huskClaimsAPI = HuskClaimsAPI.getInstance();
-        World world = huskClaimsAPI.getWorld(position.getWorld().getName());
-        return huskClaimsAPI.getClaimsOverlapping(world, Region.around(
-                Position.at(position.getX(), position.getY(), position.getZ(), world),
-                range
-            ))
-            .stream()
+        World world = huskClaimsAPI.getWorld(pos1.getWorld().getName());
+        return !huskClaimsAPI.getClaimsOverlapping(world, Region.from(
+                Position.at(pos1.getX(), pos1.getY(), pos1.getZ(), world),
+                Position.at(pos2.getX(), pos2.getY(), pos2.getZ(), world)
+            )).stream()
             .allMatch(claim -> {
                 UUID uuid = claim.getOwner().orElse(null);
                 return uuid != null && player.getUniqueId() == uuid;

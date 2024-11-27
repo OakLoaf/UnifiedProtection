@@ -57,14 +57,14 @@ public class WorldGuardHook extends AbstractBukkitHook implements BukkitRegionHo
     }
 
     @Override
-    public boolean hasRegionInRange(Location location, int range) {
-        ApplicableRegionSet regionSet = getRegionsInRange(location, range);
+    public boolean hasRegionWithin(Location loc1, Location loc2) {
+        ApplicableRegionSet regionSet = getRegionsInArea(loc1, loc2);
         return regionSet != null && regionSet.size() > 0;
     }
 
     @Override
-    public boolean areRegionsInRangeOwnedBy(Location location, int range, Player player) {
-        ApplicableRegionSet regionSet = getRegionsInRange(location, range);
+    public boolean ownsAllRegionsWithin(Location loc1, Location loc2, Player player) {
+        ApplicableRegionSet regionSet = getRegionsInArea(loc1, loc2);
         if (regionSet == null) {
             return true;
         }
@@ -76,15 +76,24 @@ public class WorldGuardHook extends AbstractBukkitHook implements BukkitRegionHo
             });
     }
 
-    private ApplicableRegionSet getRegionsInRange(Location location, int range) {
+    private ApplicableRegionSet getRegionsInArea(Location loc1, Location loc2) {
         RegionContainer regionContainer = WorldGuard.getInstance().getPlatform().getRegionContainer();
-        RegionManager regionManager = regionContainer.get(BukkitAdapter.adapt(location.getWorld()));
+        RegionManager regionManager = regionContainer.get(BukkitAdapter.adapt(loc1.getWorld()));
         if (regionManager == null) {
             return null;
         }
 
-        BlockVector3 min = BukkitAdapter.asBlockVector(location).subtract(range, range, range);
-        BlockVector3 max = BukkitAdapter.asBlockVector(location).add(range, range, range);
-        return regionManager.getApplicableRegions(new ProtectedCuboidRegion("", true, min, max));
+        BlockVector3 min = BlockVector3.at(
+            Math.min(loc1.getBlockX(), loc2.getBlockX()),
+            Math.min(loc1.getBlockY(), loc2.getBlockY()),
+            Math.min(loc1.getBlockZ(), loc2.getBlockZ())
+        );
+        BlockVector3 max = BlockVector3.at(
+            Math.max(loc1.getBlockX(), loc2.getBlockX()),
+            Math.max(loc1.getBlockY(), loc2.getBlockY()),
+            Math.max(loc1.getBlockZ(), loc2.getBlockZ())
+        );
+
+        return regionManager.getApplicableRegions(new ProtectedCuboidRegion("unified-protection-check", true, min, max));
     }
 }
