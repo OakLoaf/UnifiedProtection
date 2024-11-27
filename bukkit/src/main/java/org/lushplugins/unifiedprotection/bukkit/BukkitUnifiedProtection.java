@@ -11,6 +11,7 @@ import org.jetbrains.annotations.Nullable;
 import org.lushplugins.unifiedprotection.UnifiedProtection;
 import org.lushplugins.unifiedprotection.bukkit.hook.GriefPreventionHook;
 import org.lushplugins.unifiedprotection.bukkit.hook.HuskTownsHook;
+import org.lushplugins.unifiedprotection.bukkit.hook.PvPToggleHook;
 import org.lushplugins.unifiedprotection.bukkit.hook.WorldGuardHook;
 import org.lushplugins.unifiedprotection.hook.*;
 import org.lushplugins.unifiedprotection.player.OnlinePlayer;
@@ -23,9 +24,10 @@ public class BukkitUnifiedProtection extends UnifiedProtection {
 
     @SuppressWarnings("Convert2MethodRef")
     public BukkitUnifiedProtection() {
+        addPluginHook("GriefPrevention", () -> new GriefPreventionHook());
         addPluginHook("HuskClaims", () -> new HuskClaimsHook());
         addPluginHook("HuskTowns", () -> new HuskTownsHook());
-        addPluginHook("GriefPrevention", () -> new GriefPreventionHook());
+        addPluginHook("PvPToggle", () -> new PvPToggleHook());
         addPluginHook("WorldGuard", () -> new WorldGuardHook());
     }
 
