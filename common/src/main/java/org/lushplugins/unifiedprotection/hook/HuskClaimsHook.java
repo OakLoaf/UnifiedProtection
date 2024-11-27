@@ -39,7 +39,7 @@ public class HuskClaimsHook extends AbstractHook implements RegionHook {
     public boolean ownsAllRegionsWithin(OperationPosition pos1, OperationPosition pos2, OnlinePlayer player) {
         HuskClaimsAPI huskClaimsAPI = HuskClaimsAPI.getInstance();
         World world = huskClaimsAPI.getWorld(pos1.getWorld().getName());
-        return !huskClaimsAPI.getClaimsOverlapping(world, Region.from(
+        return huskClaimsAPI.getClaimsOverlapping(world, Region.from(
                 Position.at(pos1.getX(), pos1.getY(), pos1.getZ(), world),
                 Position.at(pos2.getX(), pos2.getY(), pos2.getZ(), world)
             )).stream()
