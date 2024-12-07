@@ -7,14 +7,7 @@ plugins {
 group = "org.lushplugins"
 version = "1.0.0-alpha13"
 
-subprojects {
-    apply(plugin="java-library")
-    apply(plugin="maven-publish")
-    apply(plugin="io.github.goooler.shadow")
-
-    group = rootProject.group
-    version = rootProject.version
-
+allprojects {
     repositories {
         mavenCentral()
         mavenLocal()
@@ -25,6 +18,15 @@ subprojects {
         maven("https://maven.enginehub.org/repo/") // WorldGuard
         maven("https://jitpack.io") // GriefPrevention
     }
+}
+
+subprojects {
+    apply(plugin="java-library")
+    apply(plugin="maven-publish")
+    apply(plugin="io.github.goooler.shadow")
+
+    group = rootProject.group
+    version = rootProject.version
 
     dependencies {
         compileOnly("org.jetbrains:annotations:26.0.1")
