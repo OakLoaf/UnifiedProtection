@@ -24,7 +24,7 @@ public class WorldGuardHook extends AbstractBukkitHook implements BukkitRegionHo
             case BLOCK_BREAK, FARM_BLOCK_BREAK -> Flags.BLOCK_BREAK;
             case BLOCK_INTERACT, REDSTONE_INTERACT -> Flags.INTERACT;
             case PLAYER_DAMAGE_PLAYER -> Flags.PVP;
-            case PLAYER_DAMAGE_MONSTER, PLAYER_DAMAGE_ENTITY, PLAYER_DAMAGE_PERSISTENT_ENTITY -> Flags.DAMAGE_ANIMALS;
+            case PLAYER_DAMAGE_MONSTER, PLAYER_DAMAGE_ENTITY, PLAYER_DAMAGE_PERSISTENT_ENTITY, PLACE_VEHICLE, BREAK_VEHICLE -> Flags.DAMAGE_ANIMALS;
             case MONSTER_SPAWN, PASSIVE_MOB_SPAWN -> Flags.MOB_SPAWNING;
             case MONSTER_DAMAGE_TERRAIN -> Flags.ENDER_BUILD; // TODO: There are multiple flags for this...
             case EXPLOSION_DAMAGE_TERRAIN -> Flags.CREEPER_EXPLOSION; // TODO: There are multiple flags for this...

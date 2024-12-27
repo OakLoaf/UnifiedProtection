@@ -17,7 +17,7 @@ public class GriefPreventionHook extends AbstractBukkitHook implements BukkitReg
         ClaimPermission permission = switch (operationType) {
             case BLOCK_PLACE, BLOCK_BREAK, FARM_BLOCK_PLACE, FARM_BLOCK_BREAK, FARM_BLOCK_INTERACT, FILL_BUCKET,
                  EMPTY_BUCKET, PLACE_HANGING_ENTITY, BREAK_HANGING_ENTITY, USE_SPAWN_EGG, PLAYER_DAMAGE_MONSTER,
-                 PLAYER_DAMAGE_ENTITY, PLAYER_DAMAGE_PERSISTENT_ENTITY -> ClaimPermission.Build;
+                 PLAYER_DAMAGE_ENTITY, PLAYER_DAMAGE_PERSISTENT_ENTITY, PLACE_VEHICLE, BREAK_VEHICLE -> ClaimPermission.Build;
             case CONTAINER_OPEN -> ClaimPermission.Inventory;
             case BLOCK_INTERACT, REDSTONE_INTERACT, ENTITY_INTERACT, ENDER_PEARL_TELEPORT, START_RAID -> ClaimPermission.Access;
             case PLAYER_DAMAGE_PLAYER -> null; // TODO: Verify
