@@ -50,6 +50,8 @@ public class HuskTownsHook extends AbstractHook implements BukkitRegionHook {
             case ENDER_PEARL_TELEPORT -> OperationType.ENDER_PEARL_TELEPORT;
             case CONTAINER_OPEN -> OperationType.CONTAINER_OPEN;
             case START_RAID -> OperationType.START_RAID;
+            case PLACE_VEHICLE -> OperationType.PLACE_VEHICLE;
+            case BREAK_VEHICLE -> OperationType.BREAK_VEHICLE;
         };
 
         BukkitHuskTownsAPI huskTownsAPI = BukkitHuskTownsAPI.getInstance();
