@@ -9,25 +9,35 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 import org.lushplugins.unifiedprotection.bukkit.utils.ChunkUtils;
+import org.lushplugins.unifiedprotection.utils.ObjectMatcher;
+
+import java.util.List;
+
+import static net.william278.cloplib.operation.OperationType.*;
 
 public class GriefPreventionHook extends AbstractBukkitHook implements BukkitRegionHook {
 
     @Override
     public boolean isOperationAllowed(OperationType operationType, Location location, @Nullable Player player) {
-        ClaimPermission permission = switch (operationType) {
-            case BLOCK_PLACE, BLOCK_BREAK, FARM_BLOCK_PLACE, FARM_BLOCK_BREAK, FARM_BLOCK_INTERACT, FILL_BUCKET,
-                 EMPTY_BUCKET, PLACE_HANGING_ENTITY, BREAK_HANGING_ENTITY, USE_SPAWN_EGG, PLAYER_DAMAGE_MONSTER,
-                 PLAYER_DAMAGE_ENTITY, PLAYER_DAMAGE_PERSISTENT_ENTITY, PLACE_VEHICLE, BREAK_VEHICLE -> ClaimPermission.Build;
-            case CONTAINER_OPEN -> ClaimPermission.Inventory;
-            case BLOCK_INTERACT, REDSTONE_INTERACT, ENTITY_INTERACT, ENDER_PEARL_TELEPORT, START_RAID -> ClaimPermission.Access;
-            case PLAYER_DAMAGE_PLAYER -> null; // TODO: Verify
-            case MONSTER_SPAWN, PASSIVE_MOB_SPAWN -> null; // TODO: Verify
-            case MONSTER_DAMAGE_TERRAIN -> null; // TODO: Verify
-            case EXPLOSION_DAMAGE_TERRAIN -> null; // TODO: Verify
-            case EXPLOSION_DAMAGE_ENTITY -> null; // TODO: Verify
-            case FIRE_BURN -> null; // TODO: Verify
-            case FIRE_SPREAD -> null; // TODO: Verify
-        };
+        ClaimPermission permission = ObjectMatcher.onFirstMatch(
+            operationType,
+            List.of(
+                new ObjectMatcher.ObjectRunner<>(
+                    () -> ClaimPermission.Build,
+                    BLOCK_PLACE, BLOCK_BREAK, FARM_BLOCK_PLACE, FARM_BLOCK_BREAK, FARM_BLOCK_INTERACT, FILL_BUCKET,
+                    EMPTY_BUCKET, PLACE_HANGING_ENTITY, BREAK_HANGING_ENTITY, USE_SPAWN_EGG, PLAYER_DAMAGE_MONSTER,
+                    PLAYER_DAMAGE_ENTITY, PLAYER_DAMAGE_PERSISTENT_ENTITY, PLACE_VEHICLE, BREAK_VEHICLE
+                ),
+                new ObjectMatcher.ObjectRunner<>(
+                    () -> ClaimPermission.Inventory,
+                    CONTAINER_OPEN
+                ),
+                new ObjectMatcher.ObjectRunner<>(
+                    () -> ClaimPermission.Access,
+                    BLOCK_INTERACT, REDSTONE_INTERACT, ENTITY_INTERACT, ENDER_PEARL_TELEPORT, START_RAID
+                )
+            )
+        );
 
         if (permission == null) {
             return true;
