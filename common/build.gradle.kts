@@ -4,5 +4,5 @@ dependencies {
     compileOnly("net.william278.husktowns:husktowns-common:3.1.2")
 
     // Libraries
-    api("net.william278.cloplib:cloplib-common:2.0.8")
+    api("net.william278.cloplib:cloplib-common:2.0.9")
 }
