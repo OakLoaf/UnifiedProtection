@@ -52,8 +52,6 @@ subprojects {
         }
 
         shadowJar {
-            relocate("net.william278.cloplib", "org.lushplugins.libraries.cloplib")
-
             minimize()
 
             archiveFileName.set("${project.name}-${project.version}.jar")
