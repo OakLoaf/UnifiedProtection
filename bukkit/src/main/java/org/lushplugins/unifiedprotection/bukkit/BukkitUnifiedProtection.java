@@ -10,6 +10,7 @@ import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 import org.lushplugins.unifiedprotection.UnifiedProtection;
 import org.lushplugins.unifiedprotection.bukkit.hook.GriefPreventionHook;
+import org.lushplugins.unifiedprotection.bukkit.hook.HuskClaimsHook;
 import org.lushplugins.unifiedprotection.bukkit.hook.PvPToggleHook;
 import org.lushplugins.unifiedprotection.bukkit.hook.WorldGuardHook;
 import org.lushplugins.unifiedprotection.hook.*;
