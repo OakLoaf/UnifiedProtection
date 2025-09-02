@@ -29,7 +29,7 @@ subprojects {
     version = rootProject.version
 
     dependencies {
-        compileOnly("org.jetbrains:annotations:26.0.2")
+        compileOnly("org.jetbrains:annotations:26.0.2-1")
     }
 
     java {
