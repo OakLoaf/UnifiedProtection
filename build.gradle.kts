@@ -23,7 +23,7 @@ allprojects {
 subprojects {
     apply(plugin="java-library")
     apply(plugin="maven-publish")
-    apply(plugin="io.github.goooler.shadow")
+    apply(plugin="com.gradleup.shadow")
 
     group = rootProject.group
     version = rootProject.version
