@@ -1,7 +1,7 @@
 plugins {
     `java-library`
     `maven-publish`
-    id("io.github.goooler.shadow") version("8.1.7")
+    id("com.gradleup.shadow") version("9.3.1")
 }
 
 group = "org.lushplugins"
@@ -23,7 +23,7 @@ allprojects {
 subprojects {
     apply(plugin="java-library")
     apply(plugin="maven-publish")
-    apply(plugin="io.github.goooler.shadow")
+    apply(plugin="com.gradleup.shadow")
 
     group = rootProject.group
     version = rootProject.version
