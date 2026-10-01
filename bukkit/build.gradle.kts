@@ -1,6 +1,6 @@
 dependencies {
     // Dependencies
-    compileOnly("org.spigotmc:spigot-api:26.2-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot-api:26.3-R0.1-SNAPSHOT")
 
     // Soft Dependencies
     compileOnly("com.github.TechFortress:GriefPrevention:18.0.0")
